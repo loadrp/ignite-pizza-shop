@@ -1,14 +1,14 @@
-import { Button } from "./components/ui/button"
-import './global.css'
+import { RouterProvider } from "react-router-dom";
+import { router } from './routes'
+import "./global.css";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 export function App() {
-  return (
-    <>
-      <div className="flex justify-center items-center h-screen">
-      <Button>Enviar</Button>
-
-      </div>
-    </>
-  )
+  return (  
+    <HelmetProvider>
+      <Helmet titleTemplate="%s | pizza.shop" />
+      <RouterProvider router={router}/>
+    </HelmetProvider>
+     
+  );
 }
-
