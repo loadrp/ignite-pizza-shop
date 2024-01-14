@@ -7,7 +7,6 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const signUpForm = z.object({
   email: z.string().email(),
   restaurantName: z.string(),
@@ -18,7 +17,7 @@ const signUpForm = z.object({
 type SignUpForm = z.infer<typeof signUpForm>;
 
 export function SignUp() {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -32,7 +31,7 @@ export function SignUp() {
         description: "Parabéns, agora você pode entrar",
         action: {
           label: "Fazer login",
-          onClick: () => navigate('/sign-in'),
+          onClick: () => navigate("/sign-in"),
         },
       });
     } catch {
@@ -58,19 +57,26 @@ export function SignUp() {
               Seja um parceiro e comece suas vendas!
             </p>
             <form onSubmit={handleSubmit(handleSignUp)} className="space-y-4">
-
               <div className="space-y-2">
                 <Label className="flex font-semibold" htmlFor="restaurantName">
                   Nome do Estabelecimento
                 </Label>
-                <Input id="restaurantName" type="text" {...register("restaurantName")}/>
+                <Input
+                  id="restaurantName"
+                  type="text"
+                  {...register("restaurantName")}
+                />
               </div>
 
               <div className="space-y-2">
                 <Label className="flex font-semibold" htmlFor="managerName">
                   Nome
                 </Label>
-                <Input id="managerName" type="text" {...register("managerName")}/>
+                <Input
+                  id="managerName"
+                  type="text"
+                  {...register("managerName")}
+                />
               </div>
 
               <div className="space-y-2">
@@ -92,7 +98,15 @@ export function SignUp() {
               </Button>
 
               <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
-                Ao continuar, você concorda com nossos <a className="underline underline-offset-4" href="">termos de serviço</a> e <a className="underline underline-offset-2" href="">politicas de privacidade</a>.
+                Ao continuar, você concorda com nossos{" "}
+                <a className="underline underline-offset-4" href="">
+                  termos de serviço
+                </a>{" "}
+                e{" "}
+                <a className="underline underline-offset-2" href="">
+                  politicas de privacidade
+                </a>
+                .
               </p>
             </form>
           </div>
