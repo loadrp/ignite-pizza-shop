@@ -15,6 +15,7 @@ import {
   Line,
   Tooltip,
 } from "recharts";
+import colors from "tailwindcss/colors";
 
 const data = [
   { date: "10/12", revenue: 100 },
@@ -53,7 +54,7 @@ export function RevenueChart() {
               }
             />
             <CartesianGrid vertical={false} className="stroke-muted"/>
-            <Line type="linear" strokeWidth={2} dataKey="revenue" stroke="#fefefe"/>
+            <Line type="linear" strokeWidth={2} dataKey="revenue" stroke={colors.current}/>
           </LineChart>
         </ResponsiveContainer>
       </CardContent>
