@@ -3,7 +3,7 @@ import { DollarSign } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { MonthRevenueCard } from "./month-revenue-card";
 import { MonthOrdersAmountCard } from "./month-orders-amount-card";
-import { DayOrdersAmountCard } from "./day-orders-amount";
+import { DayOrdersAmountCard } from "./day-orders-amount-card";
 import { MonthCanceledOrdersAmountCard } from "./month-canceled-orders-amount";
 import { RevenueChart } from "./revenue-chart";
 import { PopularProductsChart } from "./popular-products-chart";
