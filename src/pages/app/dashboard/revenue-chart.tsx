@@ -19,10 +19,10 @@ import {
   YAxis,
   CartesianGrid,
   Line,
-  Tooltip,
 } from "recharts";
 import colors from "tailwindcss/colors";
 import { subDays } from "date-fns";
+import { Loader2 } from "lucide-react";
 
 
 export function RevenueChart() {
@@ -34,11 +34,10 @@ export function RevenueChart() {
 
   const {data : dailyRevenueInPeriod} = useQuery({
     queryKey: ["metrics", "daily-revenue-in-period", dateRange],
-    queryFn: () => getDailyRevenueInPeriod({
-      from: dateRange?.from,
-      to: dateRange?.to,
-    }),
-
+   queryFn: () => getDailyRevenueInPeriod({
+     from: dateRange?.from?.toISOString(),
+     to: dateRange?.to?.toISOString(),
+   }),
   })
 
   const chartData = useMemo(() => {
@@ -70,7 +69,7 @@ export function RevenueChart() {
 
         </div>
       </CardHeader>
-      {chartData && (
+      {chartData ? (
         <CardContent>
         <ResponsiveContainer width="100%" height={240}>
           <LineChart data={chartData} style={{ fontSize: 12 }}>
@@ -92,7 +91,13 @@ export function RevenueChart() {
           </LineChart>
         </ResponsiveContainer>
       </CardContent>
-      )}
+      ): (
+        <div className="flex h-[240px] w-full items-center justify-center">
+          <Loader2 className="h-8 w-8 text-muted-foreground animate-spin" />
+        </div>
+      )
+      
+    }
     </Card>
   );
 }

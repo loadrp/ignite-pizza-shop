@@ -1,11 +1,4 @@
-import { getOrderDetails } from "@/api/get-order-details";
-import { OrderStatus } from "@/components/order-status";
-import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -15,43 +8,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useQuery } from "@tanstack/react-query";
-import { formatDistanceToNow } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { OrderDetailsSkeleton } from "./order-datails-skeleton";
 
 export interface OrderDetailsProps {
   orderId: string;
   open: boolean;
 
 }
-export function OrderDetails({ orderId, open }: OrderDetailsProps) {
-  const { data: order } = useQuery({
-    queryKey: ["orders", orderId],
-    queryFn: () => getOrderDetails({ orderId }),
-    enabled: open,
-  });
+export function OrderDetailsSkeleton() {
 
   return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Pedido: {orderId}</DialogTitle>
-        <DialogDescription>Detalhes do pedido</DialogDescription>
-      </DialogHeader>
-      {order ? (
-        <div className="space-y-6">
+    <div className="space-y-6">
           <Table>
             <TableBody>
               <TableRow>
                 <TableCell className="text-muted-foreground">Status</TableCell>
                 <TableCell className="flex justify-end">
-                  <OrderStatus status={order.status} />
+                  <Skeleton className="h-5 w-20"/>
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="text-muted-foreground">Cliente</TableCell>
                 <TableCell className="flex justify-end">
-                  {order.customer.name}
+                  <Skeleton className="h-5 w-[164px]"/>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -59,13 +37,13 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
                   Telefone
                 </TableCell>
                 <TableCell className="flex justify-end">
-                  {order.customer.phone}
+                  <Skeleton className="h-5 w-[140px]"/>
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="text-muted-foreground">E-mail</TableCell>
                 <TableCell className="flex justify-end">
-                  {order.customer.email}
+                  <Skeleton className="h-5 w-[200px]"/>
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -73,12 +51,7 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
                   Realizado há
                 </TableCell>
                 <TableCell className="flex justify-end">
-                  {order.createdAt
-                    ? formatDistanceToNow(order.createdAt, {
-                        locale: ptBR,
-                        addSuffix: true,
-                      })
-                    : null}
+                  <Skeleton className="h-5 w-[148px]"/>
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -94,24 +67,19 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {order.orderItems.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.product.name}</TableCell>
-                  <TableCell className="text-right">{item.quantity}</TableCell>
-                  <TableCell className="text-right">
-                    {(item.priceInCents / 100).toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
+              {Array.from({ length: 2 }).map((_,index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    	<Skeleton className="h-5 w-[140px]"/>
                   </TableCell>
                   <TableCell className="text-right">
-                    {((item.priceInCents * item.quantity) / 100).toLocaleString(
-                      "pt-BR",
-                      {
-                        style: "currency",
-                        currency: "BRL",
-                      },
-                    )}
+                    <Skeleton className="h-5 w-3 ml-auto"/>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Skeleton className="h-5 w-12 ml-auto"/>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Skeleton className="h-5 w-12 ml-auto"/>
                   </TableCell>
                 </TableRow>
               ))}
@@ -120,18 +88,11 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
               <TableRow>
                 <TableCell colSpan={3}>Total do Pedido</TableCell>
                 <TableCell className="text-right font-medium">
-                  {(order.totalInCents/100).toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
+                  <Skeleton className="h-5 w-20"/>
                 </TableCell>
               </TableRow>
             </TableFooter>
           </Table>
         </div>
-      ):
-      
-      <OrderDetailsSkeleton/>}
-    </DialogContent>
-  );
+  )
 }
